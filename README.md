@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://sponsor.ajay.app"><img src="images/logo.png" alt="Logo"></img></a>
+  <img src="images/logo.png" alt="Logo"></img>
   
   <br/>
   <sub>Logo by <a href="https://github.com/lencodigitexer">@lencodigitexer</a></sub>
