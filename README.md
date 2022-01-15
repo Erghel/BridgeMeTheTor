@@ -7,11 +7,6 @@
 
 <h1 align="center">I Love Tor</h1>
 
-<p align="center">
-  <b>Download:</b>
-  <a href="https://addons.mozilla.org/addon/ilineonion/?src=external-github">Firefox</a>
-</p>
-
 
 <p align="center">
     <a href="https://addons.mozilla.org/addon/ilineonion/?src=external-github"><img src="https://img.shields.io/amo/users/ilineonion?label=Firefox%20Users" alt="Badge"></img></a>
