@@ -8,12 +8,6 @@
 <h1 align="center">I Love Tor</h1>
 
 
-<p align="center">
-    <a href="https://addons.mozilla.org/addon/ilineonion/?src=external-github"><img src="https://img.shields.io/amo/users/ilineonion?label=Firefox%20Users" alt="Badge"></img></a>
-</p>
-
-
-
 Копия **[сайта](https://torscan-ru.ntc.party/)**, который создал **[ValdikSS](https://twitter.com/ValdikSS)**, переделанное в расширение для браузера, оно помогает искать рабочие мосты для подключению к **Tor**
 
 A copy of the **[site](https://torscan-ru.ntc.party/)** that **[ValdikSS](https://twitter.com/ValdikSS)** created, converted into a browser extension, it helps to search for working bridges for connecting to **Tor**
