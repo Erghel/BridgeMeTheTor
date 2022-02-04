@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tor Relay Scan" />
+    <meta property="og:description" content="Поиск рабочих Tor Relay для доступа к Tor в обход российских блокировок" />
+    <meta property="og:image" content="https://styleguide.torproject.org/static/images/tor-logo/color.png" />
+    <link rel="manifest" href="/manifest.json">
+    <title>Tor Relay Scan</title>
+</head>
+
+<body>
+
+    <h2>Сканер доступных релеев Tor</h2>
+    <p>Эта страница ищет рабочие Tor Relay, которые можно использовать в качестве мостов
+        для доступа к сети Tor в обход блокировок.<br>
+        Проверка выполняется по 30 случайным Relay, скачанным с
+        <a href="https://metrics.torproject.org/onionoo.html">onionoo.torproject.org</a>.<br>
+        Страница автономна, её можно <a href="" download="tor_relay_scan.html">сохранить на диск</a> и открывать
+        локально.
+    </p>
+    <p><b>Рабочие Tor relay для использования в качестве Bridge (мостов):</b></p>
+    <textarea readonly id="working" rows="10" style="width:99%"></textarea>
+    <br><small>Скопируйте и вставьте текст выше в Tor Browser, в раздел Bridges → Provide a bridge.<br>
+        Подробная инструкция по настройке <a
+            href="https://tb-manual.torproject.org/ru/bridges/#vvesti-adresa-mostov">для компьютера</a> и <a
+            href="https://tb-manual.torproject.org/ru/mobile-tor/#obkhod">Android-телефона</a>.</small>
+    <br><br>
+    <p>Нерабочие relay:</p>
+    <textarea readonly id="notworking" rows="4" style="width:99%"></textarea>
+    <br><p id="result"></p>
+
+    <script>
+        // register service worker for PWA/offline cache
+        window.addEventListener("load", () => {
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("service-worker.js");
+            }
+        });
+
+        const ONIONOO_URL = "https://onionoo.torproject.org/details?type=relay&running=true&fields=fingerprint,or_addresses";
+
+        const fetchWithTimeout = (uri, options = {}, time = 10000) => {
+            const controller = new AbortController();
+            const config = { ...options, signal: controller.signal };
+
+            const timeout = setTimeout(() => {
+                controller.abort()
+            }, time);
+
+            return fetch(uri, config);
+        };
+
+        const check_port = (hostport) => {
+            // from https://searchfox.org/mozilla-central/source/netwerk/base/nsIOService.cpp
+            let badports = [1, 7, 9, 11, 13, 15, 17, 19, 20, 21, 22, 23, 25, 37, 42, 43, 53, 69, 77, 79, 87,
+                95, 101, 102, 103, 104, 109, 110, 111, 113, 115, 117, 119, 123, 135, 137, 139, 143, 161, 179,
+                389, 427, 465, 512, 513, 514, 515, 526, 530, 531, 532, 540, 548, 554, 556, 563, 587, 601, 636,
+                989, 990, 993, 995, 1719, 1720, 1723, 2049, 3659, 4045, 5060, 5061, 6000, 6566, 6665, 6666,
+                6667, 6668, 6669, 6697, 10080];
+
+            let url = new URL(`https://${hostport}`);
+
+            return !badports.includes(parseInt(url.port));
+        };
+
+        const check = (hostport, fingerprint) => {
+            fetchWithTimeout(`https://${hostport}`)
+                .then((response) => document.getElementById("result").innerText = response)
+                .catch((error) => {
+                    const line = `${hostport} ${fingerprint}\n`;
+
+                    if (error.name === 'AbortError') {
+                        document.getElementById("notworking").value += line;
+                    } else {
+                        document.getElementById("working").value += line;
+                    }
+                })
+        };
+
+        const gettor = () => {
+            return fetch(ONIONOO_URL);
+        };
+
+        const gettor_corsproxy1 = () => {
+            return fetch(`https://jsonp.afeld.me/?url=${encodeURIComponent(ONIONOO_URL)}`);
+        };
+
+        const gettor_corsproxy2 = () => {
+            return fetch(`https://corsanywhere.herokuapp.com/${encodeURIComponent(ONIONOO_URL)}`);
+        };
+
+        const process_data = (result) => {
+            let relays = result.relays;
+            let new_relays = [];
+
+            for (let i = 0; i < 30; i++) {
+                new_relays.push(relays[Math.floor(Math.random() * relays.length)]);
+            }
+
+            for (let relay of new_relays) {
+                for (let address of relay.or_addresses) {
+                    if (address.search("\\[") === -1 && check_port(address)) {
+                        // skip ipv6 because js can't detect unavailability reason
+                        check(address, relay.fingerprint);
+                    }
+                }
+            }
+        };
+
+        const do_everything = (datafunc) => {
+            return datafunc().then(result => {
+                return result.json();
+            }).then(result => {
+                process_data(result);
+            });
+        };
+
+
+        do_everything(gettor)
+            .catch(error => {
+                console.log(error);
+
+                do_everything(gettor_corsproxy1)
+                    .catch(error => {
+                        console.log(error);
+                        do_everything(gettor_corsproxy2);
+                    });
+            });
+
+    </script>
+
+</body>
+
+</html>
