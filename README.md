@@ -20,4 +20,4 @@
 Icons made by:
 * <a href="https://www.flaticon.com/free-icons/internet" title="internet icons">Internet icons created by Freepik - Flaticon</a>
 
-The api is used <a href="https://onionoo.torproject.org/details?type=relay&running=true&fields=fingerprint,or_addresses" title="internet icons">onionoo.torproject.org</a>
+The API is used <a href="https://onionoo.torproject.org/details?type=relay&running=true&fields=fingerprint,or_addresses" title="internet icons">onionoo.torproject.org</a>
