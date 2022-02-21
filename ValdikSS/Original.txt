@@ -32,7 +32,6 @@
     <p>Нерабочие relay:</p>
     <textarea readonly id="notworking" rows="4" style="width:99%"></textarea>
     <br><p id="result"></p>
-
     <script>
         // register service worker for PWA/offline cache
         window.addEventListener("load", () => {
@@ -86,11 +85,15 @@
         };
 
         const gettor_corsproxy1 = () => {
-            return fetch(`https://jsonp.afeld.me/?url=${encodeURIComponent(ONIONOO_URL)}`);
+            return fetch(`https://corsbypasser.herokuapp.com/${ONIONOO_URL}`);
         };
 
         const gettor_corsproxy2 = () => {
-            return fetch(`https://corsanywhere.herokuapp.com/${encodeURIComponent(ONIONOO_URL)}`);
+            return fetch(`https://corsanywhere.herokuapp.com/${ONIONOO_URL}`);
+        };
+
+        const gettor_corsproxy3 = () => {
+            return fetch(`https://tauron.herokuapp.com/${ONIONOO_URL}`);
         };
 
         const process_data = (result) => {
@@ -127,12 +130,13 @@
                 do_everything(gettor_corsproxy1)
                     .catch(error => {
                         console.log(error);
-                        do_everything(gettor_corsproxy2);
+                        do_everything(gettor_corsproxy2)
+                            .catch(error => {
+                                console.log(error);
+                                do_everything(gettor_corsproxy3);
+                            });
                     });
             });
-
     </script>
-
 </body>
-
 </html>
