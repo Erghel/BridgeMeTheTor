@@ -5,7 +5,7 @@
   <sub>Logo by <a href="https://github.com/lencodigitexer">@lencodigitexer</a></sub>
 </p>
 
-<h1 align="center">I Love Tor</h1>
+<h1 align="center">BridgeMeTheTor</h1>
 
 <h2> Ru </h2>
   <p> Копия <b><a href="https://torscan-ru.ntc.party/">сайта</a></b> (его можно скачать и развернуть локально, в репозитории есть копия сайта, если захотите скачать), который создал <b><a href="https://twitter.com/ValdikSS">ValdikSS</a></b>, переделанное в расширение для браузера, оно помогает искать рабочие мосты для подключению к <b>Tor</b>.
