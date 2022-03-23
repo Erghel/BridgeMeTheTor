@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "I love Tor",
+  "name": "BridgeMeTheTor",
   "version": "1.0",
   "icons": {
     "16": "images/icon.png"
@@ -23,7 +23,7 @@
     "tabs"
   ],
   "browser_action": {
-    "default_title": "I love Tor",
+    "default_title": "BridgeMeTheTor",
     "default_popup": "index.html"
   }
 }
