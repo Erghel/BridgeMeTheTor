@@ -1,29 +1,32 @@
 {
   "manifest_version": 2,
   "name": "BridgeMeTheTor",
-  "version": "1.0",
+  "version": "0.1",
+  "description":"Take Tor bridges - here",
+  "browser_action": {
+    "default_title": "BridgeMeTheTor",
+    "default_icon": "images/logo_16.png",
+    "default_popup": "index.html"
+  },
   "icons": {
-    "16": "images/icon.png"
+    "16": "images/logo_16.png"
   },
   "content_scripts": [
     {
       "js": [
         "script.js"
-      ],
-      "matches": [
-        "http://*/*",
-        "https://*/*"
       ]
     }
   ],
   "permissions": [
-    "activeTab",
-    "declarativeContent",
-    "storage",
-    "tabs"
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking"
   ],
   "browser_action": {
-    "default_title": "BridgeMeTheTor",
-    "default_popup": "index.html"
+    "default_title": "BridgeMeTheTor"
   }
 }
