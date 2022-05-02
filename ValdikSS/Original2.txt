@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tor Relay List" />
+    <meta property="og:description" content="Рабочие Tor Relay для доступа к Tor в обход российских блокировок" />
+    <meta property="og:image" content="https://styleguide.torproject.org/static/images/tor-logo/color.png" />
+    <link rel="manifest" href="/manifest.json">
+    <title>Tor Relay List</title>
+</head>
+
+<body>
+
+    <p>Ранее здесь размещался сканер доступных релеев Tor, который более не работает в браузере: изменился метод
+        блокировки,
+        препятствующий тестированию работоспособности релеев браузером.
+        Продолжает работать отдельная программа для той же цели:
+        <a href="https://github.com/ValdikSS/tor-relay-scanner">Tor Relay Scanner</a>.</p>
+    <p>На этой странице теперь
+        публикуются релеи, работающие в России через всех провайдеров (в т.ч. с системой 
+        <a href="https://roskomsvoboda.org/cards/card/tspu-blokrovki-runet/">ТСПУ</a>).
+    </p>
+
+    <p><b>Рабочие Tor relay для использования в качестве Bridge (мостов):</b></p>
+    <textarea readonly id="working" rows="7" style="width:99%"></textarea>
+    <br><small>Скопируйте и вставьте текст выше в Tor Browser, в раздел Bridges → Provide a bridge.<br>
+        Подробная инструкция по настройке <a
+            href="https://tb-manual.torproject.org/ru/bridges/#vvesti-adresa-mostov">для компьютера</a> и <a
+            href="https://tb-manual.torproject.org/ru/mobile-tor/#obkhod">Android-телефона</a>.</small>
+    <br><br>
+    <br>
+    <p id="result"></p>
+
+    <script>
+        // register service worker for PWA/offline cache
+        window.addEventListener("load", () => {
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker.register("service-worker.js");
+            }
+        });
+
+        const LIST_URL = "https://torscan-ru.ntc.party/relays.txt";
+
+        const gettor = () => {
+            return fetch(LIST_URL);
+        };
+
+        const gettor_corsproxy1 = () => {
+            return fetch(`https://corsanywhere.herokuapp.com/${LIST_URL}`);
+        };
+
+        const gettor_corsproxy2 = () => {
+            return fetch(`https://tauron.herokuapp.com/${LIST_URL}`);
+        };
+
+        const gettor_corsproxy3 = () => {
+            return fetch(`https://corsbypasser.herokuapp.com/${LIST_URL}`);
+        };
+
+        const process_data = (result) => {
+            document.getElementById("working").value = result;
+        };
+
+        const do_everything = (datafunc) => {
+            return datafunc().then(result => {
+                return result.text();
+            }).then(result => {
+                process_data(result);
+            });
+        };
+
+
+        do_everything(gettor)
+            .catch(error => {
+                console.log(error);
+
+                do_everything(gettor_corsproxy1)
+                    .catch(error => {
+                        console.log(error);
+                        do_everything(gettor_corsproxy2)
+                            .catch(error => {
+                                console.log(error);
+                                do_everything(gettor_corsproxy3);
+                            });
+                    });
+            });
+
+    </script>
+
+</body>
+
+</html>
