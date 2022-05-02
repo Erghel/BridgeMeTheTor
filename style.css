@@ -1,0 +1,43 @@
+body {
+    background-color: #8e53aa;
+}
+
+.container {
+    margin: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.main, .disclamer {
+    /* max-width: 1100px; */
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #8e53aa;
+    color: white;
+}
+
+.tor__logo {
+    /* max-width: 1100px; */
+    display: flex;
+    justify-content: center;
+}
+
+.bridge {
+    /* max-width: 1100px; */
+    display: flex;
+    flex: content;
+    justify-content: center;
+}
+
+textarea {
+    border: 3px solid;
+    border-color: black;
+    font-size: 12px;
+}
+
+a {
+    color: white;
+    font-weight: 900;
+}

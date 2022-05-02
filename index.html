@@ -5,36 +5,34 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Tor Relay Scan" />
-    <meta property="og:description" content="Поиск рабочих Tor Relay для доступа к Tor в обход российских блокировок" />
+    <meta property="og:title" content="Tor Relay List" />
+    <meta property="og:description" content="Рабочие Tor Relay для доступа к Tor в обход российских блокировок" />
     <meta property="og:image" content="https://styleguide.torproject.org/static/images/tor-logo/color.png" />
-    <title>Tor Relay Scan</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <title>Tor Bridges Scanner</title>
 </head>
 
 <body>
-<p><b>Оригинал сайта <a href="https://torscan-ru.ntc.party/">сайта</a>, сделанный <a href="https://twitter.com/ValdikSS">ValdikSS</a>, страница автономна и ее можно скачать  запустить локально.</b></p>
-<h2>Сканер доступных релеев Tor</h2>
-<p>Эта страница ищет рабочие Tor Relay, которые можно использовать в качестве мостов
-    для доступа к сети Tor в обход блокировок.<br>
-    Проверка выполняется по 30 случайным Relay, скачанным с
-    <a href="https://metrics.torproject.org/onionoo.html">onionoo.torproject.org</a>.<br>
-    <!-- Страница автономна, её можно <a href="" download="tor_relay_scan.html">сохранить на диск</a> и запускать
-    локально.-->
-</p>
-<p><b>Рабочие Tor relay для использования в качестве Bridge (мостов):</b></p>
-<textarea readonly id="working" rows="10" style="width:99%"></textarea>
-<br><small>Скопируйте и вставьте текст выше в Tor Browser, в раздел Bridges → Provide a bridge.<br>
-    Подробная инструкция по настройке <a
-            href="https://tb-manual.torproject.org/ru/bridges/#vvesti-adresa-mostov">для компьютера</a> и <a
-            href="https://tb-manual.torproject.org/ru/mobile-tor/#obkhod">Android-телефона</a>.</small>
-<br><br>
-<p>Нерабочие relay:</p>
-<textarea readonly id="notworking" rows="4" style="width:99%"></textarea>
-<br><p id="result"></p>
-
-<script src="script.js">
-</script>
-
+    <div class="container">
+    <div class="tor__logo">
+        <img src="./images/tor1.png" />
+    </div>
+    <div class="main">
+        <p><b>Рабочие Tor relay для использования в качестве Bridge (мостов):</b></p>
+    </div>
+    <div class="bridge">
+        <textarea readonly id="working" rows="7" style="width:99%"></textarea>
+        <p id="result"></p>
+        
+    </div>
+    <div class="disclamer">
+        <a href="https://tb-manual.torproject.org/ru/bridges/#vvesti-adresa-mostov">Как использовать?</a>
+        <a href="./answers.html">Для чего это сделано?</a>
+        <p>Все данные и механизм поиска мостов взят из оригинального <a href="https://torscan-ru.ntc.party/">сайта</a> </p>
+    </div>
+</div>
+    <script src="script.js"></script>
 </body>
 
 </html>
