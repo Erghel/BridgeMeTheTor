@@ -1,3 +1,3 @@
 <p align="center">
-  <img src="images/tor.png" alt="Logo"></img>
+  <img src="images/tor.png" alt="Logo" />
 </p>
